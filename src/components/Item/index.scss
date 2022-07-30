@@ -1,0 +1,16 @@
+.item {
+  width: 90vw;
+  height: 100px;
+  line-height: 100px;
+  background-color: white;
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 0 20px;
+  margin-top: 20px;
+  overflow-x: scroll;
+  display: flex;
+
+  .checked {
+    text-decoration: line-through;
+  }
+}

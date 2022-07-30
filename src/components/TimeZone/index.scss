@@ -1,0 +1,30 @@
+.time_zone {
+  width: 90%;
+
+  height: 120px;
+  line-height: 120px;
+  background-color: whitesmoke;
+  margin: 0 auto 40px;
+  border-radius: 10px;
+  box-shadow: 10px 10px 10px 5px rgb(240, 176, 176);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  box-sizing: border-box;
+
+  .time {
+    width: 400px;
+    letter-spacing: 5px;
+  }
+  .process {
+    width: 120px;
+    height: 120px;
+    line-height: 120px;
+  }
+
+  .process_llne{
+    height: 40px;
+    width: 200px;
+  }
+}
