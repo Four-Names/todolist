@@ -3,126 +3,131 @@ const defaultState = {
   choosedDayInfo: {},
   dayLists: [
     {
-      day: '2020-7-2',
+      day: "2020-7-2",
       tasks: [
         {
-          titile: '任务一',
+          titile: "任务一",
           done: false
         },
         {
-          titile: '任务二',
+          titile: "任务二",
           done: true
         },
         {
-          titile: '任务三',
+          titile: "任务三",
           done: true
         }
       ]
     },
     {
-      day: '2020-7-3',
+      day: "2020-7-3",
       tasks: [
         {
-          titile: '任务一',
+          titile: "任务一",
           done: false
         }
       ]
     },
     {
-      day: '2020-7-4',
+      day: "2020-7-4",
       tasks: [
         {
-          titile: '任务一',
+          titile: "任务一",
           done: false
         },
         {
-          titile: '任务二',
+          titile: "任务二",
           done: true
         },
         {
-          titile: '任务三',
+          titile: "任务三",
           done: true
         },
         {
-          titile: '任务四',
+          titile: "任务四",
           done: true
         }
       ]
     },
     {
-      day: '2020-7-5',
+      day: "2020-7-5",
       tasks: [
         {
-          titile: '任务一',
+          titile: "任务一",
           done: false
         },
         {
-          titile: '任务二',
+          titile: "任务二",
           done: true
         }
       ]
     },
     {
-      day: '2020-7-6',
+      day: "2020-7-6",
       tasks: [
         {
-          titile: '任务一',
+          titile: "任务一",
           done: false
         },
         {
-          titile: '任务二',
+          titile: "任务二",
           done: true
         },
         {
-          titile: '任务三',
+          titile: "任务三",
           done: true
         }
       ]
     }
-  ],
-}
+  ]
+};
 export default (state = defaultState, action) => {
-  const newState = JSON.parse(JSON.stringify(state))
-  const { payload } = action
-  console.log('action', payload, newState, action)
+  const newState = JSON.parse(JSON.stringify(state));
+  const { payload } = action;
+  console.log("action", payload, newState, action);
 
   switch (action.type) {
-    case 'day/add': {
+    case "day/add": {
       newState.dayLists.push({
-        day: payload.toLocaleDateString().replaceAll('/', '-'),
+        day: payload.toLocaleDateString().replaceAll("/", "-"),
         tasks: []
-      })
-      newState.createDayList = false
-      return newState
+      });
+      newState.createDayList = false;
+      return newState;
     }
-    case 'day/del': {
+    case "day/del": {
       return {
         ...newState,
         dayLists: newState.dayLists.filter(day => day !== payload)
-      }
+      };
     }
-    case 'day/tasks/add': {
-      return newState
+    case "day/tasks/add": {
+      return newState;
     }
-    case 'day/tasks/del': {
-      return newState
+    case "day/tasks/del": {
+      return newState;
     }
-    case 'day/task/complete':{
-      return newState
+    case "day/task/complete": {
+      return newState;
     }
-    case 'day/add/hide': {
+    case "day/add/hide": {
       return {
         ...newState,
         createDayList: false
-      }
+      };
     }
-    case 'day/add/show': {
+    case "day/add/show": {
       return {
         ...newState,
         createDayList: true
-      }
+      };
+    }
+    case "day/choosed": {
+      return {
+        choosedDayInfo: payload
+      };
     }
     default:
-      return newState
+      return newState;
   }
-}
+};

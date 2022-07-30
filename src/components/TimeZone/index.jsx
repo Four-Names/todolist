@@ -1,23 +1,15 @@
 import { Component } from 'react'
-import { View, Text } from '@tarojs/components'
-import Taro from '@tarojs/taro'
-import { Circle } from '@taroify/core'
+import { View } from '@tarojs/components'
 import { Progress } from '@taroify/core'
 import './index.scss'
 
 export default class TimeZone extends Component {
   constructor(props) {
     super(props)
-    this.handleClick = this.handleClick.bind(this)
     this.getPercent = this.getPercent.bind(this)
   }
 
-  handleClick(e) {
-    e.preventDefault()
-    Taro.navigateTo({
-      url: '/pages/detail/index'
-    })
-  }
+
 
   getPercent() {
     if (this.props.dayInfo.tasks.length === 0) return 0
@@ -27,7 +19,7 @@ export default class TimeZone extends Component {
   render() {
     return (
       <View className='time_zone'>
-        <View className='time' onClick={this.handleClick}>
+        <View className='time'>
           {this.props.dayInfo.day}
         </View>
 

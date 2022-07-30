@@ -25,7 +25,7 @@ class Index extends Component {
   render() {
     return (
       <View className='index'>
-        <DayList />
+        {/* <DayList /> */}
 
         <View className='btn_create'>
           <Sticky position='bottom' offsetBottom={30}>

@@ -3,7 +3,7 @@ import { Flex } from '@taroify/core'
 import { connect } from 'react-redux'
 import TimeZone from '../TimeZone'
 import { Component } from 'react'
-import {  DAY_CHOOSED } from '../../store/action'
+import { DAY_CHOOSED } from '../../store/action'
 
 import './index.scss'
 
@@ -12,13 +12,21 @@ class DayList extends Component {
     super(props)
   }
 
+  handleClick(dayInfo) {
+    console.log(dayInfo,'DAYiNFO');
+    this.props.adyChoose(dayInfo)
+    Taro.navigateTo({
+      url: '/pages/detail/index'
+    })
+  }
+
   render() {
     return (
       <View className='day_list'>
         <Flex justify='center'>
           <Flex.Item span='22'>
             {this.props.dayLists.map(dayInfo => (
-              <TimeZone dayInfo={dayInfo} />
+              <TimeZone dayInfo={dayInfo} onClick={() => this.handleClick(dayInfo)} />
             ))}
           </Flex.Item>
         </Flex>
@@ -46,4 +54,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(DayList)
+export default connect(mapStateToProps, mapDispatchToProps)(DayList)
