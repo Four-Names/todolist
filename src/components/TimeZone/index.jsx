@@ -1,5 +1,6 @@
 import { Component } from 'react'
-import { View } from '@tarojs/components'
+import { View, Text } from '@tarojs/components'
+import { Circle } from '@taroify/core'
 import { Progress } from '@taroify/core'
 import './index.scss'
 
@@ -9,8 +10,6 @@ export default class TimeZone extends Component {
     this.getPercent = this.getPercent.bind(this)
   }
 
-
-
   getPercent() {
     if (this.props.dayInfo.tasks.length === 0) return 0
     return parseInt(100 * (this.props.dayInfo.tasks.filter(item => item.done).length / this.props.dayInfo.tasks.length))
@@ -19,7 +18,7 @@ export default class TimeZone extends Component {
   render() {
     return (
       <View className='time_zone'>
-        <View className='time'>
+        <View className='time' onClick={this.props.handleClick}>
           {this.props.dayInfo.day}
         </View>
 

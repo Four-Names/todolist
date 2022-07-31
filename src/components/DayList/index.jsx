@@ -4,17 +4,19 @@ import { connect } from 'react-redux'
 import TimeZone from '../TimeZone'
 import { Component } from 'react'
 import { DAY_CHOOSED } from '../../store/action'
+import Taro from '@tarojs/taro'
 
 import './index.scss'
 
 class DayList extends Component {
   constructor(props) {
     super(props)
+    this.handleClick = this.handleClick.bind(this)
   }
 
-  handleClick(dayInfo) {
-    console.log(dayInfo,'DAYiNFO');
-    this.props.adyChoose(dayInfo)
+  handleClick(idx) {
+    this.props.dayChoose(idx);
+    console.log('idx', idx)
     Taro.navigateTo({
       url: '/pages/detail/index'
     })
@@ -25,8 +27,8 @@ class DayList extends Component {
       <View className='day_list'>
         <Flex justify='center'>
           <Flex.Item span='22'>
-            {this.props.dayLists.map(dayInfo => (
-              <TimeZone dayInfo={dayInfo} onClick={() => this.handleClick(dayInfo)} />
+            {this.props.dayLists.map((dayInfo, idx) => (
+              <TimeZone dayInfo={dayInfo} handleClick={() => this.handleClick(idx)} />
             ))}
           </Flex.Item>
         </Flex>
@@ -43,15 +45,17 @@ const mapStateToProps = state => {
   }
 }
 
-
 //触发dispath
 const mapDispatchToProps = dispatch => {
   // 默认传递参数就是dispatch
   return {
-    adyChoose: payload => {
+    dayChoose: payload => {
       dispatch(DAY_CHOOSED(payload))
     }
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DayList)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DayList)
