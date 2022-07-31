@@ -1,11 +1,9 @@
-import { Component } from 'react'
-import { View, Text } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import Item from '../../components/Item'
-import AddTask from '../../components/AddTask'
+import AddTask from '../../components/AddTaskButton'
 import { Flex } from '@taroify/core'
-import { DAY_TASK_COMPLETE } from '../../store/action'
 import { connect } from 'react-redux'
-
+import AddTaskDialog from '../../components/AddTaskDialog'
 import './index.scss'
 
 function Detail(props) {
@@ -13,39 +11,31 @@ function Detail(props) {
     <View className='detail'>
       <Flex justify='center'>
         <Flex.Item span='22'>
-          {props.choosedDayInfo.tasks.map((v, i) => {
-            return <Item hanldeClick={() => props.dayTaskComplte(i)} />
+          {props.chooseyDayInfo.tasks.map((taskInfo, idx) => {
+            return <Item idx={idx} taskInfo={taskInfo} />
           })}
         </Flex.Item>
       </Flex>
 
       <AddTask />
+      {props.openDialog && <AddTaskDialog />}
     </View>
   )
 }
 
 //获取数据
 const mapStateToProps = state => {
-  const { choosedDayInfo } = state
+  const chooseyDayInfo = state.dayLists[state.chooseIdx];
+  const { openDialog } = state;
   return {
-    choosedDayInfo
+    chooseyDayInfo,
+    openDialog
   }
 }
 
-//触发dispath
-const mapDispatchToProps = dispatch => {
-  // 默认传递参数就是dispatch
-  return {
-    dayTaskComplte: payload => {
-      dispatch(DAY_TASK_COMPLETE(payload))
-    },
-    adyChoose: payload => {
-      dispatch(DAY_CHOOSED(payload))
-    }
-  }
-}
+
+
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
 )(Detail)

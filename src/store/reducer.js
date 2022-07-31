@@ -1,135 +1,159 @@
 const defaultState = {
   createDayList: false,
-  choosedDayInfo: {},
+  chooseIdx: -1,
+  recordDay: 0,
+  openDialog: false,
   dayLists: [
     {
-      day: '2020-7-2',
+      day: "2022/7/31",
       tasks: [
         {
-          titile: '任务一',
+          title: "任务一",
           done: false
         },
         {
-          titile: '任务二',
+          title: "任务二",
           done: true
         },
         {
-          titile: '任务三',
+          title: "任务三",
           done: true
         }
       ]
     },
     {
-      day: '2020-7-3',
+      day: "2022/8/3",
       tasks: [
         {
-          titile: '任务一',
+          title: "任务一",
           done: false
         }
       ]
     },
     {
-      day: '2020-7-4',
+      day: "2022/8/4",
       tasks: [
         {
-          titile: '任务一',
+          title: "任务一",
           done: false
         },
         {
-          titile: '任务二',
+          title: "任务二",
           done: true
         },
         {
-          titile: '任务三',
+          title: "任务三",
           done: true
         },
         {
-          titile: '任务四',
+          title: "任务四",
           done: true
         }
       ]
     },
     {
-      day: '2020-7-5',
+      day: "2022/8/5",
       tasks: [
         {
-          titile: '任务一',
+          title: "任务一",
           done: false
         },
         {
-          titile: '任务二',
+          title: "任务二",
           done: true
         }
       ]
     },
     {
-      day: '2020-7-6',
+      day: "2022/8/6",
       tasks: [
         {
-          titile: '任务一',
+          title: "任务一",
           done: false
         },
         {
-          titile: '任务二',
+          title: "任务二",
           done: true
         },
         {
-          titile: '任务三',
+          title: "任务三",
           done: true
         }
       ]
     }
-  ],
-}
+  ]
+};
 export default (state = defaultState, action) => {
-  const newState = JSON.parse(JSON.stringify(state))
-  const { payload } = action
-  console.log('action', payload, newState, action)
+  const newState = JSON.parse(JSON.stringify(state));
+  const { payload } = action;
+  console.log("action", payload, newState, action);
 
   switch (action.type) {
-    case 'day/add': {
+    case "day/add": {
       newState.dayLists.push({
-        day: payload.toLocaleDateString().replaceAll('/', '-'),
+        day: payload.toLocaleDateString(),
         tasks: []
-      })
-      newState.createDayList = false
-      return newState
+      });
+      newState.dayLists.sort((x, y) => {
+        const day1 = x.day;
+        const day2 = y.day;
+        if (day1 === day2) return 0;
+        return Date.parse(day1) - Date.parse(day2);
+      });
+      newState.createDayList = false;
+      return newState;
     }
-    case 'day/del': {
+    case "day/del": {
       return {
         ...newState,
         dayLists: newState.dayLists.filter(day => day !== payload)
-      }
+      };
     }
-    case 'day/tasks/add': {
-      return newState
+    case "day/tasks/add": {
+      return newState;
     }
-    case 'day/tasks/del': {
-      return newState
+    case "day/tasks/del": {
+      return newState;
     }
-    case 'day/task/complete':{
-      return newState
+    case "day/task/complete": {
+      const { done, idx } = payload;
+      newState.dayLists[newState.chooseIdx].tasks[idx].done = done;
+      return {
+        ...newState
+      };
     }
-    case 'day/add/hide': {
+    case "day/add/hide": {
       return {
         ...newState,
         createDayList: false
-      }
+      };
     }
-    case 'day/add/show': {
+    case "day/add/show": {
       return {
         ...newState,
         createDayList: true
-      }
+      };
     }
-    case 'day/choosed': {
+    case "day/chose": {
       return {
         ...newState,
-        choosedDayInfo: JSON.parse(JSON.stringify(newState.dayLists[payload]))
-      }
+        chooseIdx: payload
+      };
+    }
+    case "task/open/dialog": {
+      return {
+        ...newState,
+        openDialog: true
+      };
+    }
+    case "task/close/dialog": {
+      return {
+        ...newState,
+        openDialog: false
+      };
     }
 
     default:
-      return newState
+      return newState;
   }
-}
+};
